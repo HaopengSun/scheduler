@@ -7,7 +7,7 @@ import axios from 'axios';
 import DayList from "components/DayList";
 import Appointment from "components/Appointment/index";
 
-import { getAppointmentsForDay, getInterview } from "../../src/helpers/selectors"
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../../src/helpers/selectors"
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -18,6 +18,9 @@ export default function Application(props) {
   });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  const interviewers = getInterviewersForDay(state, state.day);
+  console.log(interviewers);
 
   const setDay = day => setState(prev => ({ ...prev, day }));
 
@@ -55,7 +58,8 @@ export default function Application(props) {
           return <Appointment
             key={appointment.id}
             {... appointment}
-            interview={interview}/>
+            interview={interview}
+            interviewers={interviewers}/>
         })}
         <Appointment key="last" time="5pm" />
       </section>
