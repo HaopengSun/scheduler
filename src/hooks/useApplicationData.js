@@ -87,7 +87,7 @@ export default function useApplicationData(){
     return axios.put(`/api/appointments/${id}`, {interview})
       .then((res) => {
         dispatch({type: SET_INTERVIEW, id, interview});
-        dispatch({type: SET_REMAINING_SPOTS, remain: -1});
+        dispatch({type: SET_REMAINING_SPOTS});
     })
   }
   
@@ -95,7 +95,7 @@ export default function useApplicationData(){
     return axios.delete(`/api/appointments/${id}`)
       .then((res) => { 
         dispatch({type: SET_INTERVIEW, id, interview: null});
-        dispatch({type: SET_REMAINING_SPOTS, remain: 1});
+        dispatch({type: SET_REMAINING_SPOTS});
     })
   }
 
@@ -107,6 +107,19 @@ export default function useApplicationData(){
     ]).then(all => {
       dispatch({type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data })
     })
+
+    const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+    socket.onopen = function(event) {
+      socket.send("Sending data to the server!");
+    }
+    socket.onmessage = function(event) {
+      console.log("Message received!")
+      console.log(event.data);
+      const received = JSON.parse(event.data);
+      if (received.type === SET_INTERVIEW){
+        dispatch(received);
+      }
+    }
   }, [])
 
   function reducer(state, action) {
@@ -116,18 +129,19 @@ export default function useApplicationData(){
       case SET_APPLICATION_DATA:
         return {...state, days: action.days, appointments: action.appointments, interviewers: action.interviewers}
       case SET_INTERVIEW: {
-        const appointment = { ...state.appointments[action.id], interview: { ...action.interview } };
+        const appointment = { ...state.appointments[action.id], interview: action.interview }
         const appointments = { ...state.appointments, [action.id]: appointment };
         return {...state, appointments};
       }
       case SET_REMAINING_SPOTS: {
+        const remain = getAppointmentsForDay(state, state.day).filter(appointment => appointment.interview === null).length;
+        // update days array
         const update = state.days.map(day => {
           if(day.name !== state.day){
             return day
           }
-          return { ...day, spots: (day.spots + action.remain) }
+          return { ...day, spots: remain }
         })
-        console.log(update);
         return {...state, days: update};
       }
 
@@ -137,5 +151,6 @@ export default function useApplicationData(){
         );
     }
   }
+
   return { state, setDay, bookInterview, cancelInterview }
 }
