@@ -108,18 +108,18 @@ export default function useApplicationData(){
       dispatch({type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data })
     })
 
-    const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-    socket.onopen = function(event) {
-      socket.send("Sending data to the server!");
-    }
-    socket.onmessage = function(event) {
-      console.log("Message received!")
-      console.log(event.data);
-      const received = JSON.parse(event.data);
-      if (received.type === SET_INTERVIEW){
-        dispatch(received);
-      }
-    }
+    // const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+    // socket.onopen = function(event) {
+    //   socket.send("Sending data to the server!");
+    // }
+    // socket.onmessage = function(event) {
+    //   console.log("Message received!")
+    //   console.log(event.data);
+    //   const received = JSON.parse(event.data);
+    //   if (received.type === SET_INTERVIEW){
+    //     dispatch(received);
+    //   }
+    // }
   }, [])
 
   function reducer(state, action) {
