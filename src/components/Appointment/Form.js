@@ -15,7 +15,6 @@ export default function From(props){
     props.onCancel();
   }
   function validation(){
-    console.log(name, interviewer);
     if(name === ''){
       setError('Student name cannot be blank');
       return
@@ -33,7 +32,7 @@ export default function From(props){
         <form autoComplete="off" onSubmit={event => {
           event.preventDefault();
           // validate the user input when the submit event happens
-          validate();
+          validation();
           }}>
           <input
             className="appointment__create-input text--semi-bold"
