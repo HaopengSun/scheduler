@@ -25,3 +25,9 @@ npm run storybook
 
 home page
 !["home"](https://github.com/HaopengSun/scheduler/blob/master/src/screenshots/home-page.png)
+
+add appointment
+!["home"](https://github.com/HaopengSun/scheduler/blob/master/src/screenshots/add-appointment.png)
+
+successfully make an appointment
+!["home"](https://github.com/HaopengSun/scheduler/blob/master/src/screenshots/finish-adding.png)
