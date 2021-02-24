@@ -21,3 +21,7 @@ npm test
 ```sh
 npm run storybook
 ```
+## Screenshots
+
+home page
+!["home"](https://github.com/HaopengSun/scheduler/blob/master/src/screenshots/home-page.png)

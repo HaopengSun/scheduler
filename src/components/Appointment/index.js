@@ -27,17 +27,15 @@ export default function Appointment(props){
     props.interview ? SHOW : EMPTY
   );
 
-  // useEffect(() => {
-  //   console.log(props.interview, mode);
-  //   if (props.interview && mode === EMPTY) {
-  //     console.log(props.interview);
-  //     transition(SHOW);
-  //   }
-  //   if (props.interview === null && mode === SHOW) {
-  //     console.log(props.interview);
-  //     transition(EMPTY);
-  //   }
-  // }, [props.interview, transition, mode]);
+  useEffect(() => {
+    console.log(props.interview, mode);
+    if (props.interview && mode === EMPTY) {
+      transition(SHOW);
+    }
+    if (props.interview === null && mode === SHOW) {
+      transition(EMPTY);
+    }
+  }, [props.interview, transition, mode]);
 
   function save(name, interviewer) {
     const interview = {

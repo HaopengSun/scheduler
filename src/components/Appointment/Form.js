@@ -19,10 +19,10 @@ export default function From(props){
       setError('Student name cannot be blank');
       return
     }
-    // if(interviewer === null){
-    //   setError('Must choose an interviewer');
-    //   return
-    // }
+    if(interviewer === null){
+      setError('Must choose an interviewer');
+      return
+    }
     setError("");
     props.onSave(name, interviewer);
   }
