@@ -55,12 +55,12 @@ describe("Application", () => {
     const { container, debug } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
     const appointment = getAllByTestId(container, "appointment")[1];
-    console.log(prettyDOM(appointment));
+    // console.log(prettyDOM(appointment));
     fireEvent.click(getByAltText(appointment, "Delete"));
     expect(getByText(appointment, "Are you sure you would like to delete?")).toBeInTheDocument();
-    console.log(prettyDOM(appointment));
+    // console.log(prettyDOM(appointment));
     fireEvent.click(getByText(appointment, "Confirm"));
-    console.log(prettyDOM(appointment));
+    // console.log(prettyDOM(appointment));
     await waitForElement(() => getByText(appointment, "1pm"));
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
@@ -98,7 +98,7 @@ describe("Application", () => {
     // console.log(prettyDOM(appointment));
     await waitForElement(()=>getByText(appointment, "Could not save the appointment"));
     fireEvent.click(getByAltText(appointment, "Close"));
-    console.log(prettyDOM(appointment));
+    // console.log(prettyDOM(appointment));
     await waitForElement(() => getByText(container, "Archie Cohen"));
   });
 
